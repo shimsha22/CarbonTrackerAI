@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Carbon Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Carbon Tracker AI</h1>
+        <div class="subtitle">Track, analyze, and reduce your footprint.</div>
+    </header>
+
+    <div id="login-screen" class="auth-screen">
+        <div class="login-box">
+            <h2 style="margin-top:0;">Sign In</h2>
+            <form onsubmit="handleLogin(event)">
+                <input type="text" id="loginUsername" placeholder="Username" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Log In</button>
+            </form>
+            <p class="toggle-link" onclick="toggleAuthScreens('register')">Don't have an account? Sign up here.</p>
+        </div>
+    </div>
+
+    <div id="register-screen" class="auth-screen" style="display: none;">
+        <div class="login-box">
+            <h2 style="margin-top:0;">Create Account</h2>
+            <form onsubmit="handleRegister(event)">
+                <input type="text" id="regUsername" placeholder="Username" required>
+                <input type="email" id="regEmail" placeholder="Email Address" required>
+                <input type="password" id="regPassword" placeholder="Create Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p class="toggle-link" onclick="toggleAuthScreens('login')">Already have an account? Log in here.</p>
+        </div>
+    </div>
+
+    <div id="dashboard-screen" style="display: none;">
+        <h2 id="greeting" style="text-align: center; color: var(--primary);">Welcome back!</h2>
+        
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Total Activities</h3>
+                <p id="total-logs">0</p>
+            </div>
+            <div class="card">
+                <h3>Total Footprint</h3>
+                <p id="total-co2">0.00 <span style="font-size: 1rem; color: var(--text-muted);">kg CO₂</span></p>
+            </div>
+        </div>
+
+        <form class="add-log-section" onsubmit="submitLog(event)">
+            <select id="activityType" required>
+                <option value="" disabled selected>Select an activity...</option>
+                <option value="DRIVING"> Driving (Miles)</option>
+                <option value="ELECTRICITY"> Electricity (kWh)</option>
+                <option value="MEAT_MEAL">Meat Meal (Servings)</option>
+            </select>
+            <input type="number" id="amount" step="0.1" placeholder="Enter amount..." required>
+            <button type="submit" class="btn-add">Log Activity</button>
+        </form>
+
+        <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+            <div class="card ai-section">
+                <h3 style="color: var(--primary); font-size: 1.1rem;"> AI Eco-Coach</h3>
+                <p style="font-size: 1rem; color: var(--text-muted); font-weight: normal;">Let Google Gemini analyze your habits and generate a personalized reduction plan.</p>
+                <button id="ai-btn" class="btn-ai" onclick="getAiAdvice()">Generate Action Plan</button>
+                <div id="ai-response"></div>
+            </div>
+        </div>
+
+        <h2>Activity History</h2>
+        <ul class="history-list" id="history-container">
+            <li style="color: var(--text-muted);">Loading your data...</li>
+        </ul>
+
+        <div style="text-align: center;">
+            <button class="btn-logout" onclick="logout()">Sign Out</button>
+        </div>
+    </div>
+</div>
+<div id="toast-container" class="toast-container"></div>
+<script src="app.js"></script>
+</body>
+</html>
